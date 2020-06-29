@@ -24,6 +24,24 @@ export const ITEMS = [
         icon: 'SEND',
         isHidden: () => false,
     },
+    {
+        route: 'wallet-exchange',
+        title: <Translation id="TR_EXCHANGE" />,
+        icon: 'EXCHANGE',
+        isHidden: () => false,
+    },
+    {
+        route: 'wallet-buy',
+        title: <Translation id="TR_BUY" />,
+        icon: 'PLUS',
+        isHidden: () => false,
+    },
+    {
+        route: 'wallet-sell',
+        title: <Translation id="TR_SELL" />,
+        icon: 'TODO',
+        isHidden: () => false,
+    },
     // {
     //     route: 'wallet-details',
     //     title: <Translation id="TR_NAV_DETAILS" />,
@@ -40,14 +58,14 @@ export const ITEMS = [
             // return !(network && network.testnet && network.hasSignVerify);
         },
     },
-    {
-        route: 'suite-index',
-        title: <Translation id="TR_BUY" />,
-        icon: 'PLUS',
-        isHidden: (_account: Account) => {
-            // const network = NETWORKS.find(n => n.symbol === account.symbol);
-            // return network && network.testnet;
-            return true;
-        },
-    },
+    // {
+    //     route: 'suite-index',
+    //     title: <Translation id="TR_BUY" />,
+    //     icon: 'PLUS',
+    //     isHidden: (_account: Account) => {
+    //         // const network = NETWORKS.find(n => n.symbol === account.symbol);
+    //         // return network && network.testnet;
+    //         return true;
+    //     },
+    // },
 ] as const;
