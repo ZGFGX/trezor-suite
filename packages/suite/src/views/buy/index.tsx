@@ -3,6 +3,7 @@ import { Select, H2, P } from '@trezor/components';
 import { useExchange } from '@exchange-hooks';
 import { WalletLayout } from '@wallet-components';
 import { ExchangeLayout } from '@exchange-components';
+import BuyForm from '@exchange-components/buy/BuyForm';
 
 // Buy top-level component used in two contexts: `wallet` and standalone `exchange` app
 export default () => {
@@ -28,15 +29,17 @@ export default () => {
                         ? `${account.addresses?.unused[0].path} : ${account.addresses?.unused[0].address}`
                         : `${account.path} : ${account.descriptor}`}
                 </P>
+                <BuyForm />
             </WalletLayout>
         );
     }
 
     // wrap by ExchangeLayout using exchange menu
     return (
-        <ExchangeLayout title="Sell">
+        <ExchangeLayout title="Buy">
             <H2>Buy in standalone context</H2>
             <Select placeholder={<div>Select destination account</div>} />
+            <BuyForm />
         </ExchangeLayout>
     );
 };

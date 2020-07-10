@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 import { AppState } from '@suite-types';
+import { useState, useEffect } from 'react';
+import { BuyInfo, loadBuyInfo } from '@suite/actions/exchange/exchangeActions';
 
 export const useExchange = () => {
     const router = useSelector<AppState, AppState['router']>(state => state.router);
@@ -20,3 +22,15 @@ export const useAllAccounts = () => {
     );
     return accounts;
 };
+
+export function useBuyInfo() {
+    const [buyInfo, setBuyInfo] = useState<BuyInfo>({ coins: [], providerInfos: {} });
+
+    useEffect(() => {
+        loadBuyInfo().then(bi => {
+            setBuyInfo(bi);
+        });
+    }, []);
+
+    return { buyInfo };
+}

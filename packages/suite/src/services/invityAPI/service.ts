@@ -20,6 +20,7 @@ import {
     WatchBuyTradeResponse,
 } from './buyTypes';
 import { CountryInfo, SupportTicketResponse, SupportTicket } from './utilityTypes';
+import { isDev } from '@suite/utils/suite/build';
 
 // import {
 //     localStorageGetString,
@@ -27,7 +28,10 @@ import { CountryInfo, SupportTicketResponse, SupportTicket } from './utilityType
 //     localStorageGetCache,
 //     localStorageSetCache,
 // } from '@utils/localstorage';
-// import { BitcoinTestnetTicker, EthereumTestnetRopstenTicker } from '@utils/utils';
+
+// TODO - get from constants
+const BitcoinTestnetTicker = 'TEST';
+const EthereumTestnetRopstenTicker = 'tROP';
 
 // TODO - just placeholders, will be handled differently
 function localStorageGetString(_key: string): string | null {
@@ -81,14 +85,12 @@ class InvityAPI {
     private BUY_WATCH_TRADE = '/api/buy/watch/{{counter}}';
 
     constructor() {
-        // TODO - detect staging
-        // let defaultServer;
-        // if (process.env.STAGE !== stages.PROD) {
-        //     defaultServer = this.stagingAPIServer;
-        // } else {
-        //     defaultServer = this.productionAPIServer;
-        // }
-        const defaultServer = this.stagingAPIServer;
+        let defaultServer;
+        if (isDev()) {
+            defaultServer = this.stagingAPIServer;
+        } else {
+            defaultServer = this.productionAPIServer;
+        }
         this.server = localStorageGetString(this.InvityAPIServerKey) || defaultServer;
         // override for now the production api server
         if (!this.server) {
@@ -112,8 +114,8 @@ class InvityAPI {
     }
 
     private options(body = {}, method = 'POST'): any {
-        // TODO different header for web and electron suite
-        const apiHeader = 'X-SuiteW-Api';
+        // TODO different header for web 'X-SuiteW-Api' and electron suite 'X-SuiteA-Api'
+        const apiHeader = 'X-Trezor-Api';
         if (method === 'POST') {
             return {
                 method,
@@ -204,20 +206,19 @@ class InvityAPI {
                 if (!response || response.length === 0) {
                     return [];
                 }
-                // TODO - detect staging
-                // // add BTC and ETH testnet in staging
-                // if (process.env.STAGE !== stages.PROD) {
-                //     response.push({
-                //         ticker: BitcoinTestnetTicker,
-                //         name: 'Bitcoin Testnet',
-                //         category: 'Testnet',
-                //     });
-                //     response.push({
-                //         ticker: EthereumTestnetRopstenTicker,
-                //         name: 'Ethereum Testnet Ropsten',
-                //         category: 'Testnet',
-                //     });
-                // }
+                // add BTC and ETH testnet in dev
+                if (isDev()) {
+                    response.push({
+                        ticker: BitcoinTestnetTicker,
+                        name: 'Bitcoin Testnet',
+                        category: 'Testnet',
+                    });
+                    response.push({
+                        ticker: EthereumTestnetRopstenTicker,
+                        name: 'Ethereum Testnet Ropsten',
+                        category: 'Testnet',
+                    });
+                }
                 localStorageSetCache(this.ExchangeCoinsCacheKey, response);
             }
             return response;
