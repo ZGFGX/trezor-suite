@@ -189,5 +189,5 @@ ipcMain.on('start-bridge', async () => {
 
 ipcMain.on('restart-app', () => {
     app.relaunch();
-    app.exit();
+    app.exit(0);
 });
