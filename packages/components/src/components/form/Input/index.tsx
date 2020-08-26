@@ -40,6 +40,10 @@ const StyledInput = styled.input<Props>`
         color: ${colors.BLACK50};
     }
 
+    &::placeholder {
+        color: ${colors.NEUE_TYPE_LIGHT_GREY};
+    }
+
     ${props =>
         props.monospace &&
         css`
