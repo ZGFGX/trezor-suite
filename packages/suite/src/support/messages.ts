@@ -758,6 +758,10 @@ const definedMessages = defineMessages({
         defaultMessage: 'Change PIN',
         id: 'TR_DEVICE_SETTINGS_CHANGE_PIN_TITLE',
     },
+    TR_DEVICE_SETTINGS_AUTO_LOCK: {
+        defaultMessage: 'Auto-lock time',
+        id: 'TR_DEVICE_SETTINGS_AUTO_LOCK',
+    },
     TR_DEVICE_YOU_RECONNECTED_IS_DIFFERENT: {
         defaultMessage:
             'Device you reconnected is different from the previous device. Connect the right one.',
