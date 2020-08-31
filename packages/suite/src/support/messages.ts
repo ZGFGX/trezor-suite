@@ -3630,7 +3630,7 @@ const definedMessages = defineMessages({
     },
     SETTINGS_ADV_COIN_CONN_INFO_NO_CONNECTED: {
         id: 'SETTINGS_ADV_COIN_CONN_INFO_NO_CONNECTED',
-        defaultMessage: 
+        defaultMessage:
             'Not connected to the backend yet. Try going to your account overview to establish the connection with the backend.',
     },
 } as const);
