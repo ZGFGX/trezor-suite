@@ -8,8 +8,7 @@ import { urlHashParams } from '@suite-utils/metadata';
  * For web, use oauth_receiver.html hosted on the same origin (localhost/sldev/trezor.io)
  */
 export const getOauthReceiverUrl = () => {
-    // @ts-ignore
-    if (!window.ipcRenderer) {
+    if (!window.desktop_api) {
         return `${window.location.origin}${getPrefixedURL('/static/oauth/oauth_receiver.html')}`;
     }
     // TEMP: for desktop. but this solution is temporary, local http server will be used later to accept callback
@@ -50,14 +49,12 @@ export const getMetadataOauthToken = (url: string) => {
         }
     };
 
-    // @ts-ignore
-    const { ipcRenderer } = global;
-    if (ipcRenderer) {
+    if (window.desktop_api) {
         const onIpcMessage = (_sender: any, message: any) => {
             onMessage({ ...message, origin: 'wallet.trezor.io' });
-            ipcRenderer.off('oauth', onIpcMessage);
+            window.desktop_api.off('oauth', onIpcMessage);
         };
-        ipcRenderer.on('oauth', onIpcMessage);
+        window.desktop_api.on('oauth', onIpcMessage);
     } else {
         window.addEventListener('message', onMessage);
     }
